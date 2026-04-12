@@ -4,8 +4,6 @@ import { authService } from '../services/authService'
 import { AuthState } from '../types/store'
 import { useChatStore } from './useChatStore'
 import { persist } from 'zustand/middleware'
-import api from '@/lib/axios'
-import { cookies } from 'next/headers'
 
 
 export const useAuthStore = create<AuthState>()(
@@ -80,8 +78,13 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     get().clearState();
                     await authService.signOut();
-                    (await cookies()).delete('accessToken');
-                    (await cookies()).delete('refreshToken');
+                    await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}api/logout`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({}),
+                    });
                     toast.success("Đăng xuất thành công");
                 } catch (error) {
                     console.log("Lỗi signOut: ", error);
