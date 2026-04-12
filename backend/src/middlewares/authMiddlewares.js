@@ -7,7 +7,7 @@ import Session from '../models/Session.js';
 export const protectedRoute = async (req, res, next) => {
     try {
         //lấy access token từ cookie
-        const accessToken = req.cookies?.accessToken;
+        const accessToken = req.cookies?.accessToken || req.headers.authorization?.split(" ")[1];
         const refreshToken = req.cookies?.refreshToken;
         if(!accessToken){
             return res.status(401).json({message: "Access token not found"})
