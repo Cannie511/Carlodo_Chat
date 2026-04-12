@@ -88,8 +88,8 @@ export const useSocketStore = create<SocketState>((set, get)=>({
             }
             const existingIds = new Set(selectedConvo?.participant.map(p => p._id));
             const newParticipants = participant
-                .filter(p => !existingIds.has(p._id))
-                .map(p => ({
+                .filter((p:any) => !existingIds.has(p._id))
+                .map((p:any) => ({
                     _id: p._id,
                     displayName: p.displayName,
                     avatarUrl: p.avatarUrl || null,
