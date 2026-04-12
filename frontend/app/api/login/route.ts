@@ -22,5 +22,5 @@ export async function POST(req: Request) {
     path: "/",
     maxAge: 60 * 60 * 24 * 14
   });
-  return Response.json({ success: true });
+  return Response.json({ accessToken, refreshToken, success: true });
 }
