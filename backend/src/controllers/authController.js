@@ -77,14 +77,17 @@ export const signIn = async (req, res) => {
 
         //lưu refreshToken và accessToken vào cookie
         res.cookie('accessToken', accessToken, {
+            httpOnly: true,
             secure: true,
             sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
+            path: '/',
             maxAge: accessTokenCookie
         });
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
             secure: true,
             sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
+            path: '/',
             maxAge: REFRESH_TOKEN_TTL
         });
 
@@ -132,8 +135,10 @@ export const refreshToken = async (req, res) => {
         //tạo access token
         const accessToken = jwt.sign({userId: session.userId}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: ACCESS_TOKEN_TTL});
         res.cookie('accessToken', accessToken, {
+            httpOnly: true,
             secure: true,
             sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
+            path: '/',
             maxAge: accessTokenCookie
         });
         res.status(200).json({ accessToken })
