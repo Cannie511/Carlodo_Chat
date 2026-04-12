@@ -2,7 +2,7 @@ import { useAuthStore } from "@/app/stores/useAuthStore";
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_MODE === 'development' ? process.env.NEXT_PUBLIC_BACKEND_URL : '/api',
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
     withCredentials: true,
 })
 
