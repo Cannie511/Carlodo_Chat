@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuthStore } from "@/app/stores/useAuthStore"
 import { useRouter } from "next/navigation"
+import { useLayoutEffect } from "react"
 
 const signInSchema = z.object({
   username: z.string().min(3, 'Tên đăng nhập phải chứa ít nhất 3 ký tự'),
@@ -25,6 +26,7 @@ export function SigninForm({
 }: React.ComponentProps<"div">) {
   const {signIn} = useAuthStore();
   const router = useRouter();
+  const {accessToken} = useAuthStore();
   const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<signInFormValues>({
     resolver: zodResolver(signInSchema),
   }); 
@@ -34,6 +36,10 @@ export function SigninForm({
     await signIn(username, password);
     router.push('/')
   }
+
+  useLayoutEffect(() => {
+    if(accessToken) router.push('/');
+  },[])
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

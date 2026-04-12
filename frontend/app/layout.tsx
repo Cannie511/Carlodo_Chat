@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import Loading from "./Loading";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "./theme-provider";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 
 const geistSans = Geist({
@@ -50,7 +51,9 @@ export default function RootLayout({
                 background: "radial-gradient(125% 125% at 50% 10%, #fff 40%, #6366f1 100%)",
               }}
             />
-            {children}
+            <ProtectedRoute>
+              {children}
+            </ProtectedRoute>
           </div>
           </Suspense>
         </ThemeProvider>

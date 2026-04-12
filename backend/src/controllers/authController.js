@@ -93,7 +93,8 @@ export const signIn = async (req, res) => {
 
         res.status(200).json({
             message: `User ${user.displayName} has been logged in`,
-            accessToken
+            accessToken,
+            refreshToken
         })
 
     } catch (error) {

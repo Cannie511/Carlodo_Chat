@@ -4,6 +4,7 @@ import { Friend, FriendRequest, User } from "./user";
 
 export interface AuthState {
     accessToken: string | null;
+    refreshToken: string | null;
     user: User | null;
     loading: boolean;
     clearState: ()=>void;

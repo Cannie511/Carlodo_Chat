@@ -10,11 +10,13 @@ export const useAuthStore = create<AuthState>()(
     persist(
         (set, get)=>({
             accessToken: null,
+            refreshToken: null,
             user: null,
             loading: false,
             clearState: ()=> {
                 set({
                     accessToken: null,
+                    refreshToken: null,
                     user: null,
                     loading: false, 
                 })
@@ -46,8 +48,8 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     get().clearState();
                     set({loading: true})
-                    const {accessToken} = await authService.signIn({username, password});
-                    set({accessToken});
+                    const {accessToken, refreshToken} = await authService.signIn({username, password});
+                    set({accessToken, refreshToken});
                     useChatStore.getState().reset();
                     await get().fetchMe()
                     useChatStore.getState().fetchConversation();
@@ -113,7 +115,7 @@ export const useAuthStore = create<AuthState>()(
         }),
         {
             name: "auth-storage",
-            partialize: (state) => ({user: state.user, accessToken: state.accessToken})
+            partialize: (state) => ({user: state.user, accessToken: state.accessToken, })
         } 
     )
 )

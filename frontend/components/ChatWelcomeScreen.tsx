@@ -1,6 +1,7 @@
 import React from 'react'
-import { SidebarInset } from './ui/sidebar'
+import { SidebarInset, SidebarTrigger } from './ui/sidebar'
 import ChatWindowHeader from './ChatWindowHeader'
+import { Button } from './ui/button'
 
 const ChatWelcomeScreen = () => {
   return (
@@ -13,6 +14,7 @@ const ChatWelcomeScreen = () => {
                 </div>
                 <h2 className='text-3xl font-bold mb-2 bg-gradient-chat bg-clip-text text-transparent'>Chào mừng bạn đến Carlodo!</h2>
                 <p className='text-muted-foreground'>Chọn một cuộc hội thoại để bắt đầu</p>
+                <p className='block sm:hidden text-muted-foreground flex items-center justify-center space-x-2'><span>Nhấn vào đây để Bắt đầu </span><SidebarTrigger className='bg-primary text-white' /></p>
             </div>
         </div>
     </SidebarInset>

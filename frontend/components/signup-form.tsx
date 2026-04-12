@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuthStore } from "@/app/stores/useAuthStore"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import { useLayoutEffect } from "react"
 
 const signUpSchema = z.object({
   firstname: z.string().min(1, 'Tên không được để trống'),
@@ -28,6 +29,7 @@ export function SignupForm({
   ...props
 }: React.ComponentProps<"div">) {
   const router = useRouter();
+  const {accessToken} = useAuthStore();
   const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<signUpFormValues>({
     resolver: zodResolver(signUpSchema),
   }); 
@@ -36,11 +38,15 @@ export function SignupForm({
 
   const onSubmit = async (data:signUpFormValues) =>{
     const {email, firstname, lastname, password, username} = data;
+    
     const resStatus = await signUp(username, password, email, firstname, lastname);
     if(resStatus === 204){
       router.push('/signin');
     }
   }
+  useLayoutEffect(() => {
+    if(accessToken) router.push('/');
+  },[])
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
