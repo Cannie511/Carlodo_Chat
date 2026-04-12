@@ -76,20 +76,20 @@ export const signIn = async (req, res) => {
         })
 
         //lưu refreshToken và accessToken vào cookie
-        res.cookie('accessToken', accessToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
-            path: '/',
-            maxAge: accessTokenCookie
-        });
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
-            path: '/',
-            maxAge: REFRESH_TOKEN_TTL
-        });
+        // res.cookie('accessToken', accessToken, {
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
+        //     path: '/',
+        //     maxAge: accessTokenCookie
+        // });
+        // res.cookie('refreshToken', refreshToken, {
+        //     httpOnly: true,
+        //     secure: true,
+        //     sameSite: 'none', //be và fe chạy trên 2 domain khác nhau, cùng domain là strict
+        //     path: '/',
+        //     maxAge: REFRESH_TOKEN_TTL
+        // });
 
         res.status(200).json({
             message: `User ${user.displayName} has been logged in`,

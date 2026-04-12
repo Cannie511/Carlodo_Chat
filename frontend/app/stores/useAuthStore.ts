@@ -4,6 +4,7 @@ import { authService } from '../services/authService'
 import { AuthState } from '../types/store'
 import { useChatStore } from './useChatStore'
 import { persist } from 'zustand/middleware'
+import api from '@/lib/axios'
 
 
 export const useAuthStore = create<AuthState>()(
@@ -48,7 +49,16 @@ export const useAuthStore = create<AuthState>()(
                 try {
                     get().clearState();
                     set({loading: true})
-                    const {accessToken, refreshToken} = await authService.signIn({username, password});
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}api/login`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ username, password }),
+                    });
+                    const data = await res.json();
+
+                    const { accessToken, refreshToken } = data;
                     set({accessToken, refreshToken});
                     useChatStore.getState().reset();
                     await get().fetchMe()

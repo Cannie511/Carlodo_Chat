@@ -15,7 +15,7 @@ const ProtectedRoute = ({children}: {children:ReactNode}) => {
                 router.push('/signin')
             }
         }
-    },[])
+    },[accessToken])
   return (
     <>{children}</>
   )
