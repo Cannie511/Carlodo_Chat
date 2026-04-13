@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
     const {pathname} = request.nextUrl;
     const accessToken = request.cookies.get('accessToken')?.value;
+    console.log(accessToken, ' - ',pathname)
     if(pathname === '/' && !accessToken){
       return NextResponse.redirect(new URL('/signin', request.url));
     }
