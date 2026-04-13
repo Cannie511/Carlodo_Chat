@@ -55,8 +55,16 @@ export const useAuthStore = create<AuthState>()(
                         },
                         body: JSON.stringify({ username, password }),
                     });
+                    if(res.status !== 200) {
+                        if(res.status === 401) {
+                            toast.error("Tài khoản hoặc mật khẩu không đúng");
+                            return;
+                        }
+                        toast.error("Đã có lỗi xảy ra khi đăng nhập, Vui lòng thử lại");
+                        return
+                    }
                     const data = await res.json();
-
+                    
                     const { accessToken, refreshToken } = data;
                     set({accessToken, refreshToken});
                     useChatStore.getState().reset();
@@ -100,6 +108,7 @@ export const useAuthStore = create<AuthState>()(
                 } catch (error) {
                     console.log("Lỗi fetchMe: ", error);
                     toast.error("Lỗi khi load dữ liệu người dùng");
+                    get().signOut();
                 }finally {
                     set({loading: false})
                 }

@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuthStore } from "@/app/stores/useAuthStore"
 import { useRouter } from "next/navigation"
 import { useLayoutEffect } from "react"
+import { Spinner } from "./ui/spinner"
 
 const signInSchema = z.object({
   username: z.string().min(3, 'Tên đăng nhập phải chứa ít nhất 3 ký tự'),
@@ -34,12 +35,12 @@ export function SigninForm({
   const onSubmit = async (data:signInFormValues) =>{
     const {username, password} = data;
     await signIn(username, password);
-    router.push('/')
+    // router.push('/');
   }
 
   useLayoutEffect(() => {
     if(accessToken) router.push('/');
-  },[])
+  },[accessToken])
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -72,7 +73,7 @@ export function SigninForm({
                   {errors.password && <p className="error-message">{errors.password.message}</p>}
                </div>
 
-               <Button type="submit" className="w-full" disabled={isSubmitting}>Đăng nhập</Button>
+               <Button type="submit" className="w-full" disabled={isSubmitting}>{isSubmitting && <Spinner className="size-5"/>} Đăng nhập</Button>
                <div className="text-center text-sm">Bạn chưa có tài khoản? {" "} <Link className="underline underline-offset-4" href={"/signup"}>Đăng ký ngay</Link></div>
             </div>
           </form>

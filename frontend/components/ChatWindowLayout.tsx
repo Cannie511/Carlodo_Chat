@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 
 const ChatWindowLayout = () => {
   const {activeConversationId, conversations, messageLoading: loading, markAsSeen } = useChatStore();
+  const router = useRouter()
   const {accessToken} = useAuthStore();
   const {connectSocket, disconnectSocket} = useSocketStore();
   const selectedConvo = conversations.find((c)=>c._id === activeConversationId) ?? null;
@@ -21,6 +22,12 @@ const ChatWindowLayout = () => {
   useEffect(()=> {
     if(accessToken) connectSocket();
     return ()=>disconnectSocket();
+  },[accessToken])
+
+  useEffect(()=> {
+    if(!accessToken) {
+      router.push('/signin')
+    }
   },[accessToken])
 
   useEffect(()=> {
