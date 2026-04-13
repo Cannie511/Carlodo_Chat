@@ -119,6 +119,13 @@ export const useAuthStore = create<AuthState>()(
                     const {user, fetchMe} = get();
                     const accessToken = await authService.refreshToken(get().refreshToken!);
                     set({accessToken});
+                    await fetch(`${process.env.NEXT_PUBLIC_CLIENT_URL}api/setCookiesAccess`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ accessToken }),
+                    });
                     if(!user) {
                         await fetchMe();
                     }
