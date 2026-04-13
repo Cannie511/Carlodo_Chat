@@ -12,7 +12,8 @@ const Logout = () => {
     const handleLogout = async () => {
         try {
             await signOut();
-            router.push('/signin')
+            router.push('/signin');
+            window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error("Có lỗi khi đăng xuất");
