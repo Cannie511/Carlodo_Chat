@@ -35,7 +35,7 @@ export function SigninForm({
   const onSubmit = async (data:signInFormValues) =>{
     const {username, password} = data;
     await signIn(username, password);
-    window.location.reload();
+    //window.location.reload();
     // router.push('/');
   }
 

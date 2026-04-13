@@ -13,7 +13,7 @@ const Logout = () => {
         try {
             await signOut();
             router.push('/signin');
-            window.location.reload();
+            //window.location.reload();
         } catch (error) {
             console.error(error);
             toast.error("Có lỗi khi đăng xuất");
